@@ -1,10 +1,12 @@
 #!/bin/bash
 set -e
 
+sleep 10
 #DATABASE INIT/CONFIG
 echo "Initializing configuration database..."
+
 mysql --host=$DB_HOST --user=root --password=$DB_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
-mysql --host=$DB_HOST --user=root --password=$DB_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASSWORD';"
+mysql --host=$DB_HOST --user=root --password=$DB_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER';"
 
 # Create necessary directories and own them to www-data
 echo "Creating necessary directories and owning them to www-data..."

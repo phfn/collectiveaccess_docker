@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   db:
-    image: mysql:5.7
+    image: mysql:8.4
     volumes:
       - db-data:/var/lib/mysql
     environment:
@@ -9,13 +9,15 @@ services:
       - MYSQL_ROOT_PASSWORD=rootpass
       - MYSQL_USER=user
       - MYSQL_PASSWORD=pass
+    networks:
+      - backend
     expose:
       - "3306"
     ports:
       - "3306:3306"
 
   backend:
-    image: collective:latest
+    build: .
     environment:
       - DB_HOST=db
       - DB_NAME=collective
@@ -30,8 +32,13 @@ services:
         - backend-media:/var/www/providence/media/
     depends_on:
       - db
+    networks:
+      - backend
     ports:
       - "8080:80"
+
+networks:
+  backend:
 
 volumes:
   db-data:
